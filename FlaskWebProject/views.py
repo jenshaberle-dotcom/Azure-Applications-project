@@ -69,7 +69,8 @@ def login():
         return redirect(url_for('home'))
 
     form = LoginForm()
-    if form.validate_on_submit():
+
+    if request.method == 'POST':
         user = User.query.filter_by(username=form.username.data).first()
 
         if user is None or not user.check_password(form.password.data):
