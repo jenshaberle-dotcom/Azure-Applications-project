@@ -1,12 +1,9 @@
-# Write-up Template
+Für die Bereitstellung der CMS-App würde ich Azure App Service statt einer Virtual Machine verwenden.
 
-### Analyze, choose, and justify the appropriate resource option for deploying the app.
+Wenn man Kosten, Skalierbarkeit, Verfügbarkeit und Workflow betrachtet, ist App Service für diese Anwendung die bessere Wahl. Die CMS-App ist eine normale Webanwendung und braucht keine vollständige Kontrolle über das Betriebssystem. Bei App Service übernimmt Azure viele Aufgaben wie Hosting, Wartung und Teile der Verwaltung. Bei einer VM müsste man sich selbst um Updates, Sicherheit, Webserver-Konfiguration und Monitoring kümmern. Das bedeutet mehr Aufwand und meistens auch höhere laufende Kosten. Außerdem lässt sich App Service einfacher skalieren, wenn die Anwendung mehr Ressourcen braucht. Auch für die Verfügbarkeit ist App Service praktisch, weil Azure die Plattform bereits für Webanwendungen vorbereitet hat. Für den Workflow ist App Service ebenfalls gut geeignet, weil sich Deployments einfach mit GitHub verbinden lassen.
 
-*For **both** a VM or App Service solution for the CMS app:*
-- *Analyze costs, scalability, availability, and workflow*
-- *Choose the appropriate solution (VM or App Service) for deploying the app*
-- *Justify your choice*
+Deshalb würde ich mich für App Service entscheiden. Die Anwendung basiert auf Flask und nutzt Azure SQL Database, Blob Storage und Microsoft Entra ID für die Anmeldung. Das passt gut zu einer verwalteten Plattform wie App Service. Für dieses Projekt ist es sinnvoller, eine Lösung zu nutzen, bei der man sich auf die Anwendung konzentrieren kann, statt zusätzlich einen Server selbst zu verwalten.
 
-### Assess app changes that would change your decision.
+Meine Entscheidung würde sich ändern, wenn die Anwendung andere technische Anforderungen hätte. Eine Virtual Machine wäre besser, wenn ich volle Kontrolle über das Betriebssystem bräuchte oder spezielle Software installieren müsste, die in App Service nicht unterstützt wird. Das wäre zum Beispiel der Fall, wenn die Anwendung zusätzliche Hintergrunddienste, besondere Serverkonfigurationen oder ältere Softwarekomponenten benötigen würde.
 
-*Detail how the app and any other needs would have to change for you to change your decision in the last section.* 
+Damit ich mich also für eine VM entscheiden würde, müsste die App deutlich stärker von einer eigenen Serverumgebung abhängen. Wenn das CMS später erweitert wird und zum Beispiel spezielle Dienste, eigene Systemkonfigurationen oder direkten Zugriff auf das Betriebssystem braucht, dann wäre eine VM sinnvoller. In diesem Fall wäre die zusätzliche Flexibilität wichtiger als der höhere Verwaltungsaufwand.
