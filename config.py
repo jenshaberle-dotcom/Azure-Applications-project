@@ -33,3 +33,4 @@ class Config(object):
     REDIRECT_PATH = "/getAToken"
     SCOPE = ["User.Read"]
     SESSION_TYPE = "filesystem"
+    PREFERRED_URL_SCHEME = "https"
