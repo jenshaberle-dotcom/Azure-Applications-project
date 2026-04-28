@@ -33,7 +33,8 @@ def new_post():
     form = PostForm(request.form)
     if form.validate_on_submit():
         post = Post()
-        post.save_changes(form, request.files['image_path'], current_user.id, new=True)
+        image_file = request.files.get('image_path')
+        post.save_changes(form, image_file, current_user.id, new=True)
         return redirect(url_for('home'))
     return render_template(
         'post.html',
@@ -48,7 +49,8 @@ def post(id):
     post = Post.query.get(int(id))
     form = PostForm(formdata=request.form, obj=post)
     if form.validate_on_submit():
-        post.save_changes(form, request.files['image_path'], current_user.id)
+        image_file = request.files.get('image_path')
+        post.save_changes(form, image_file, current_user.id)
         return redirect(url_for('home'))
     return render_template(
         'post.html',
@@ -81,7 +83,7 @@ def login():
 @app.route(Config.REDIRECT_PATH)
 def authorized():
     if request.args.get('state') != session.get("state"):
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
     if "error" in request.args:
         return render_template("auth_error.html", result=request.args)
@@ -100,6 +102,10 @@ def authorized():
         session["user"] = result.get("id_token_claims")
 
         user = User.query.filter_by(username="admin").first()
+        if user is None:
+            flash("Admin user not found.")
+            return redirect(url_for("login"))
+
         login_user(user)
         _save_cache(cache)
 
